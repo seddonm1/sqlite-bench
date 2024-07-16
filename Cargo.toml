@@ -1,0 +1,21 @@
+[package]
+name = "sqlite-bench"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.86"
+clap = { version = "4.5.9", features = ["derive"] }
+indicatif = "0.17.8"
+itertools = "0.13.0"
+rand = "0.8.5"
+rusqlite = { git = "https://github.com/seddonm1/rusqlite", branch = "begin-concurrent", features = [
+    "bundled",
+    "buildtime_bindgen",
+] }
+serde = { version = "1.0.204", features = ["derive"] }
+serde_json = "1.0.120"
+
+[profile.release]
+codegen-units = 1
+opt-level = 3
