@@ -198,7 +198,10 @@ fn begin(
                             if !scans.is_empty() {
                                 let mut scan = txn.prepare_cached(SCAN)?;
                                 for random_hex in &scans {
-                                    _ = scan.query_map([random_hex], |row| row.get::<_, i32>(0))?;
+                                    // Consume the results
+                                    scan.query_map([random_hex], |row| row.get::<_, i32>(0))?
+                                        .filter_map(Result::ok)
+                                        .for_each(drop);
                                 }
                             }
 
