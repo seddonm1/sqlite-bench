@@ -199,9 +199,7 @@ fn begin(
                                 let mut scan = txn.prepare_cached(SCAN)?;
                                 for random_hex in &scans {
                                     // Consume the results
-                                    scan.query_map([random_hex], |row| row.get::<_, i32>(0))?
-                                        .filter_map(Result::ok)
-                                        .for_each(drop);
+                                    scan.query_map([random_hex], |row| row.get::<_, i32>(0))?.for_each(drop);
                                 }
                             }
 
